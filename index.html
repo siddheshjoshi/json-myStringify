@@ -1,0 +1,70 @@
+<html>
+<script>
+	function myStringify(p) {
+
+		var str = '';
+		str = mydump(p);
+		str = str.substring(0, str.length - 1);
+		return str;
+	}
+
+	function mydump(o) {
+		var str = '{';
+		var counter = 0;
+		console.log('Debug -- Object Len: ' + Object.keys(o).length);
+		for ( var p in o) {
+			console.log(o[p] + ' Is of type: ' + typeof o[p]
+					+ ' and p is of type: ' + p);
+
+			if (typeof o[p] == 'object') {
+				console.log('recursively calling mydump with new object ' + p);
+				str += "\"" + p + "\":" + mydump(o[p]);
+			} else {
+				str += "\"" + p + "\"" + ":" + "\"" + o[p] + "\",";
+			}
+		}
+		counter++;
+		str = str.substring(0, str.length - 1);
+		str += '},';
+		console.log('printing string: ' + str);
+		return str;
+	}
+
+	function myFunction() {
+		var person = {
+			name : "Sid Joshi",
+			location : {
+				city : {
+					name : "Arlington",
+					population : "167674"
+				},
+				state : {
+					name : "Texas",
+					abbreviation : "Tx",
+					population : "6403000"
+				}
+			},
+			company : "CodingChallenge!",
+		};
+
+		var str = 'Calling myStringify()...<br><br>' + myStringify(person);
+		str += '<br><br><br> And using JSON.stringify() is as below: <br><br><br> '
+				+ JSON.stringify(person);
+
+		document.getElementById("demo").innerHTML = "<font>" + str + "</font>";
+	}
+</script>
+
+
+<body>
+	<div id="demo" name="demo">
+		Coding Challenge
+		<p>Click the button to trigger a function that is a custom
+			function to convert the JSON Object to String. The Output is
+			explicitly made to look exactly like JSON.stringify.</p>
+	</div>
+
+	<button onclick="myFunction()">Click me</button>
+
+</body>
+</html>
